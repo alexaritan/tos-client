@@ -79,4 +79,11 @@ export default class {
     return {};
   }
 
+  refreshAccessToken(refreshToken, clientId){
+    //TODO make a request to the endpoint that gets you a new access token.
+
+    const accessToken = "";
+    this.auth = `Bearer ${accessToken}`;
+  }
+
 }
