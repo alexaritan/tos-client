@@ -2,6 +2,9 @@
 build
 lib
 
+# Auth data
+src/auth.js
+
 # Logs
 logs
 *.log
