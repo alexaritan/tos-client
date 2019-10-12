@@ -1,0 +1,28 @@
+{
+  "name": "tos-client",
+  "version": "0.0.1",
+  "description": "A client used to simplify the interaction with TDA's API.",
+  "main": "lib/portfolio.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexaritan/tos-client.git"
+  },
+  "author": "Alex Aritan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/alexaritan/tos-client/issues"
+  },
+  "homepage": "https://github.com/alexaritan/tos-client#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3"
+  }
+}
