@@ -1,15 +1,30 @@
 "use strict";
 
+import rp from "request-promise";
+
 export default class {
 
-  constructor(){
-    //TODO Use the constructor to take in client creds to connect to their portfolio.
+  constructor(accessToken){
+    this.auth = `Bearer ${accessToken}`;
   }
 
-  getTicker(ticker){
-    return {
-      ticker: "SPY"
+  async getTicker(ticker){
+    //TODO add validation of ticker input. Must be type string, between 1-5 characters, all alphabetic or a /.
+    const tck = ticker.toLowerCase();
+    const options = {
+      method: "GET",
+      uri: `https://api.tdameritrade.com/v1/marketdata/${tck}/quotes`,
+      headers: {
+        Authorization: this.auth
+      }
     };
+
+    try{
+      return await rp(options);
+    }
+    catch(e){
+      return e;
+    }
   }
 
   getOptionBuyingPower(){

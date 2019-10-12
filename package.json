@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "rm -rf lib && babel src -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,12 @@
   "devDependencies": {
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }
