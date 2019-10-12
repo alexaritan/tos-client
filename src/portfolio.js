@@ -6,19 +6,25 @@ export default class {
 
   constructor(accessToken){
     this.auth = `Bearer ${accessToken}`;
+    this.baseUrl = "https://api.tdameritrade.com/v1/";
   }
 
   async getTicker(ticker){
-    //TODO add validation of ticker input. Must be type string, between 1-5 characters, all alphabetic or a /.
+    //Validate ticker input.
+    if(!ticker) throw new Error("Ticker must be provided as a string.");
+    if(typeof ticker !== "string") throw new Error("Ticker must be provided as a string.");
+
+    //Set up options for the request.
     const tck = ticker.toLowerCase();
     const options = {
       method: "GET",
-      uri: `https://api.tdameritrade.com/v1/marketdata/${tck}/quotes`,
+      uri: `${this.baseUrl}marketdata/${tck}/quotes`,
       headers: {
         Authorization: this.auth
       }
     };
 
+    //Make the request to the API.
     try{
       return await rp(options);
     }
