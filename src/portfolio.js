@@ -101,7 +101,7 @@ export default class {
     if(!accountId) throw new Error("Account ID must be provided.");
     else{
       //TODO implement this.
-      
+
       // //Set up options for the request.
       // const options = {
       //   method: "POST",
@@ -215,6 +215,70 @@ export default class {
       if(parsedResponse.access_token) this.accessToken = parsedResponse.access_token;
       else throw new Error({message: "Could not refresh access token."});
       return parsedResponse;
+    }
+    catch(e){
+      throw e;
+    }
+  }
+
+  async getWatchlist(accountId, watchlistId){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else if(!watchlistId) throw new Error("Watchlist ID must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "GET",
+        uri: `${this.baseUrl}accounts/${accountId}/watchlists/${watchlistId}`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
+    }
+  }
+
+  async getWatchlistsByAccount(accountId){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "GET",
+        uri: `${this.baseUrl}accounts/${accountId}/watchlists`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
+    }
+  }
+
+  async getAllWatchlists(){
+    //Set up options for the request.
+    const options = {
+      method: "GET",
+      uri: `${this.baseUrl}accounts/watchlists`,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    };
+
+    //Make the request to the API.
+    try{
+      return await rp(options);
     }
     catch(e){
       throw e;
