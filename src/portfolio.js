@@ -127,6 +127,32 @@ export default class {
     }
   }
 
+  async getOrders(accountId, maxResults, fromEnteredTime, toEnteredTime, status){
+    //Set up options for the request.
+    const options = {
+      method: "GET",
+      uri: `${this.baseUrl}orders`,
+      qs: {
+        accountId,
+        maxResults,
+        fromEnteredTime,
+        toEnteredTime,
+        status
+      },
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    };
+
+    //Make the request to the API.
+    try{
+      return await rp(options);
+    }
+    catch(e){
+      throw e;
+    }
+  }
+
   async refreshAccessToken(){
     //Set up options for the request.
     const options = {
