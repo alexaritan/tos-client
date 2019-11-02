@@ -97,8 +97,28 @@ export default class {
     }
   }
 
-  async placeOrder(orders){
-    return [];
+  async placeOrder(accountId){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else{
+      //TODO implement this.
+      
+      // //Set up options for the request.
+      // const options = {
+      //   method: "POST",
+      //   uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
+      //   headers: {
+      //     Authorization: `Bearer ${this.accessToken}`
+      //   }
+      // };
+
+      // //Make the request to the API.
+      // try{
+      //   return await rp(options);
+      // }
+      // catch(e){
+      //   throw e;
+      // }
+    }
   }
 
   async cancelOrder(accountId, orderId){
