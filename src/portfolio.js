@@ -97,11 +97,11 @@ export default class {
     }
   }
 
-  placeOrder(orders){
+  async placeOrder(orders){
     return [];
   }
 
-  cancelOrder(accountId, orderId){
+  async cancelOrder(accountId, orderId){
     if(!accountId) throw new Error("Account ID must be provided.");
     else if(!orderId) throw new Error("Order ID must be provided.");
     else{
