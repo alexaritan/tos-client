@@ -8,11 +8,12 @@ export default class {
   //accessToken - required; needed to authenticate with every request to the API.
   //refreshToken - optional; needed if the user would like to be able to refresh their accessToken programmatically.
   //clientId - optional; needed if the user would like to be able to refresh their accessToken programmatically.
-  constructor(accessToken, refreshToken, clientId){
+  constructor(accessToken, refreshToken, clientId, accountId){
     //TODO solve the problem of the refreshToken expiring every 90 days - a limit imposed by the TDA API.
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     this.clientId = clientId;
+    this.accountId = accountId;
     this.baseUrl = "https://api.tdameritrade.com/v1/";
   }
 
@@ -26,6 +27,25 @@ export default class {
     const options = {
       method: "GET",
       uri: `${this.baseUrl}marketdata/${tck}/quotes`,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    };
+
+    //Make the request to the API.
+    try{
+      return await rp(options);
+    }
+    catch(e){
+      throw e;
+    }
+  }
+
+  async getAccountDetails(){
+    //Set up options for the request.
+    const options = {
+      method: "GET",
+      uri: `${this.baseUrl}accounts/${this.accountId}`,
       headers: {
         Authorization: `Bearer ${this.accessToken}`
       }
@@ -82,15 +102,30 @@ export default class {
     return {};
   }
 
-  getOrder(orderId){
-    return {};
+  async getOrder(orderId){
+    //Set up options for the request.
+    const options = {
+      method: "GET",
+      uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    };
+
+    //Make the request to the API.
+    try{
+      return await rp(options);
+    }
+    catch(e){
+      throw e;
+    }
   }
 
   async refreshAccessToken(){
     //Set up options for the request.
     const options = {
       method: "POST",
-      uri: "https://api.tdameritrade.com/v1/oauth2/token",
+      uri: `${this.baseUrl}oauth2/token`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
