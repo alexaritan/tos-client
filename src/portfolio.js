@@ -108,7 +108,7 @@ export default class {
     return {};
   }
 
-  async getOrder(orderId){
+  async getOrder(accountId, orderId){
     //Set up options for the request.
     const options = {
       method: "GET",
