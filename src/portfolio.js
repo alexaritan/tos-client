@@ -285,4 +285,62 @@ export default class {
     }
   }
 
+  async createWatchlist(accountId, name, ticker){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else if(!name) throw new Error("Watchlist name must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "POST",
+        uri: `${this.baseUrl}accounts/${accountId}/watchlists`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        },
+        body: {
+          name,
+          watchlistItems: [
+            {
+              instrument: {
+                symbol: ticker,
+                assetType: "EQUITY"
+              }
+            }
+          ]
+        },
+        json: true
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
+    }
+  }
+
+  async deleteWatchlist(accountId, watchlistId){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else if(!watchlistId) throw new Error("Watchlist ID must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "DELETE",
+        uri: `${this.baseUrl}accounts/${accountId}/watchlists/${watchlistId}`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
+    }
+  }
+
 }
