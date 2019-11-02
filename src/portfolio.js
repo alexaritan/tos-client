@@ -70,11 +70,19 @@ export default class {
     }
   }
 
-  async getAccounts(){
+  async getAccounts(includePositions, includeOrders){
+    //Check for optional fields.
+    const fields = [];
+    if(includePositions) fields.push("positions");
+    if(includeOrders) fields.push("orders");
+
     //Set up options for the request.
     const options = {
       method: "GET",
       uri: `${this.baseUrl}accounts`,
+      qs: {
+        fields: fields.toString()
+      },
       headers: {
         Authorization: `Bearer ${this.accessToken}`
       }
