@@ -18,15 +18,15 @@ export default class{
 
 	async getTicker(ticker){
 		//Validate ticker input.
-		if (!ticker) throw new Error({ message: "Ticker must be provided as a string." });
-		if (typeof ticker !== "string") throw new Error({ message: "Ticker must be provided as a string." });
+		if(!ticker) throw new Error({message: "Ticker must be provided as a string." });
+		if(typeof ticker !== "string") throw new Error({message: "Ticker must be provided as a string." });
 
 		//Set up options for the request.
 		const tck = ticker.toLowerCase();
-		const options ={
+		const options = {
 			method: "GET",
 			uri: `${this.baseUrl}marketdata/${tck}/quotes`,
-			headers:{
+			headers: {
 				Authorization: `Bearer ${this.accessToken}`
 			}
 		};
@@ -36,21 +36,21 @@ export default class{
 	}
 
 	async getAccount(accountId, includePositions, includeOrders){
-		if (!accountId) throw new Error("Account ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
 		else{
 			//Check for optional fields.
 			const fields = [];
-			if (includePositions) fields.push("positions");
-			if (includeOrders) fields.push("orders");
+			if(includePositions) fields.push("positions");
+			if(includeOrders) fields.push("orders");
 
 			//Set up options for the request.
 			const options ={
 				method: "GET",
 				uri: `${this.baseUrl}accounts/${accountId}`,
-				qs:{
+				qs: {
 					fields: fields.toString()
 				},
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
@@ -63,17 +63,17 @@ export default class{
 	async getAccounts(includePositions, includeOrders){
 		//Check for optional fields.
 		const fields = [];
-		if (includePositions) fields.push("positions");
-		if (includeOrders) fields.push("orders");
+		if(includePositions) fields.push("positions");
+		if(includeOrders) fields.push("orders");
 
 		//Set up options for the request.
 		const options ={
 			method: "GET",
 			uri: `${this.baseUrl}accounts`,
-			qs:{
+			qs: {
 				fields: fields.toString()
 			},
-			headers:{
+			headers: {
 				Authorization: `Bearer ${this.accessToken}`
 			}
 		};
@@ -83,15 +83,15 @@ export default class{
 	}
 
 	async placeOrder(accountId){
-		if (!accountId) throw new Error("Account ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
 		else{
 			//TODO implement this.
 
 			// //Set up options for the request.
-			// const options ={
+			// const options = {
 			//   method: "POST",
 			//   uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
-			//   headers:{
+			//   headers: {
 			//     Authorization: `Bearer ${this.accessToken}`
 			//   }
 			// };
@@ -102,14 +102,14 @@ export default class{
 	}
 
 	async cancelOrder(accountId, orderId){
-		if (!accountId) throw new Error("Account ID must be provided.");
-		else if (!orderId) throw new Error("Order ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
+		else if(!orderId) throw new Error({message: "Order ID must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "DELETE",
 				uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
@@ -120,14 +120,14 @@ export default class{
 	}
 
 	async getOrder(accountId, orderId){
-		if (!accountId) throw new Error("Account ID must be provided.");
-		else if (!orderId) throw new Error("Order ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
+		else if(!orderId) throw new Error({message: "Order ID must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "GET",
 				uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
@@ -139,17 +139,17 @@ export default class{
 
 	async getOrders(accountId, maxResults, fromEnteredTime, toEnteredTime, status){
 		//Set up options for the request.
-		const options ={
+		const options = {
 			method: "GET",
 			uri: `${this.baseUrl}orders`,
-			qs:{
+			qs: {
 				accountId,
 				maxResults,
 				fromEnteredTime,
 				toEnteredTime,
 				status
 			},
-			headers:{
+			headers: {
 				Authorization: `Bearer ${this.accessToken}`
 			}
 		};
@@ -160,13 +160,13 @@ export default class{
 
 	async refreshAccessToken(){
 		//Set up options for the request.
-		const options ={
+		const options = {
 			method: "POST",
 			uri: `${this.baseUrl}oauth2/token`,
-			headers:{
+			headers: {
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
-			form:{
+			form: {
 				"grant_type": "refresh_token",
 				"refresh_token": this.refreshToken,
 				"client_id": this.clientId
@@ -176,20 +176,20 @@ export default class{
 		//Make the request to the API.
 		const response = await rp(options);
 		const parsedResponse = JSON.parse(response);
-		if (parsedResponse.access_token) this.accessToken = parsedResponse.access_token;
-		else throw new Error({ message: "Could not refresh access token." });
+		if(parsedResponse.access_token) this.accessToken = parsedResponse.access_token;
+		else throw new Error({message: "Could not refresh access token." });
 		return parsedResponse;
 	}
 
 	async getWatchlist(accountId, watchlistId){
-		if (!accountId) throw new Error("Account ID must be provided.");
-		else if (!watchlistId) throw new Error("Watchlist ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
+		else if(!watchlistId) throw new Error({message: "Watchlist ID must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "GET",
 				uri: `${this.baseUrl}accounts/${accountId}/watchlists/${watchlistId}`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
@@ -200,13 +200,13 @@ export default class{
 	}
 
 	async getWatchlistsByAccount(accountId){
-		if (!accountId) throw new Error("Account ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "GET",
 				uri: `${this.baseUrl}accounts/${accountId}/watchlists`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
@@ -218,10 +218,10 @@ export default class{
 
 	async getAllWatchlists(){
 		//Set up options for the request.
-		const options ={
+		const options = {
 			method: "GET",
 			uri: `${this.baseUrl}accounts/watchlists`,
-			headers:{
+			headers: {
 				Authorization: `Bearer ${this.accessToken}`
 			}
 		};
@@ -231,21 +231,21 @@ export default class{
 	}
 
 	async createWatchlist(accountId, name, ticker){
-		if (!accountId) throw new Error("Account ID must be provided.");
-		else if (!name) throw new Error("Watchlist name must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
+		else if(!name) throw new Error({message: "Watchlist name must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "POST",
 				uri: `${this.baseUrl}accounts/${accountId}/watchlists`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				},
-				body:{
+				body: {
 					name,
 					watchlistItems: [
 						{
-							instrument:{
+							instrument: {
 								symbol: ticker,
 								assetType: "EQUITY"
 							}
@@ -261,14 +261,14 @@ export default class{
 	}
 
 	async deleteWatchlist(accountId, watchlistId){
-		if (!accountId) throw new Error("Account ID must be provided.");
-		else if (!watchlistId) throw new Error("Watchlist ID must be provided.");
+		if(!accountId) throw new Error({message: "Account ID must be provided."});
+		else if(!watchlistId) throw new Error({message: "Watchlist ID must be provided."});
 		else{
 			//Set up options for the request.
-			const options ={
+			const options = {
 				method: "DELETE",
 				uri: `${this.baseUrl}accounts/${accountId}/watchlists/${watchlistId}`,
-				headers:{
+				headers: {
 					Authorization: `Bearer ${this.accessToken}`
 				}
 			};
