@@ -96,41 +96,54 @@ export default class {
       throw e;
     }
   }
-  
-  getPositions(){
-    return [];
-  }
-
-  getPosition(){
-    return {
-      ticker: "SPY"
-    };
-  }
 
   placeOrder(orders){
     return [];
   }
 
-  cancelOrder(orderId){
-    return {};
+  cancelOrder(accountId, orderId){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else if(!orderId) throw new Error("Order ID must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "DELETE",
+        uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
+    }
   }
 
   async getOrder(accountId, orderId){
-    //Set up options for the request.
-    const options = {
-      method: "GET",
-      uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
-    };
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else if(!orderId) throw new Error("Order ID must be provided.");
+    else{
+      //Set up options for the request.
+      const options = {
+        method: "GET",
+        uri: `${this.baseUrl}accounts/${accountId}/orders/${orderId}`,
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
 
-    //Make the request to the API.
-    try{
-      return await rp(options);
-    }
-    catch(e){
-      throw e;
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
     }
   }
 
