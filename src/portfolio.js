@@ -40,22 +40,33 @@ export default class {
     }
   }
 
-  async getAccount(accountId){
-    //Set up options for the request.
-    const options = {
-      method: "GET",
-      uri: `${this.baseUrl}accounts/${accountId}`,
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
-    };
+  async getAccount(accountId, includePositions, includeOrders){
+    if(!accountId) throw new Error("Account ID must be provided.");
+    else{
+      //Check for optional fields.
+      const fields = [];
+      if(includePositions) fields.push("positions");
+      if(includeOrders) fields.push("orders");
 
-    //Make the request to the API.
-    try{
-      return await rp(options);
-    }
-    catch(e){
-      throw e;
+      //Set up options for the request.
+      const options = {
+        method: "GET",
+        uri: `${this.baseUrl}accounts/${accountId}`,
+        qs: {
+          fields: fields.toString()
+        },
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      };
+
+      //Make the request to the API.
+      try{
+        return await rp(options);
+      }
+      catch(e){
+        throw e;
+      }
     }
   }
 
@@ -76,18 +87,6 @@ export default class {
     catch(e){
       throw e;
     }
-  }
-
-  getDayChange(){
-    return 100;
-  }
-
-  getPctDayChange(){
-    return 5.3;
-  }
-
-  getYTDChange(){
-    return 600;
   }
   
   getPositions(){
